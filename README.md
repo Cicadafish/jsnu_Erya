@@ -1,5 +1,5 @@
 # erya 
-![main](../main.gif)
+![main](http://oai8l5dzh.bkt.clouddn.com/main.gif)
 
 你也可以配置[virtualdisplay](https://github.com/ponty/pyvirtualdisplay)，使他在后台运行。```未测试```
 
@@ -20,7 +20,7 @@ pwd = xx
 begin_id = 'cur86883496'
 end_id = 'cur86883558'
 ```
-![a](./find_id.gif)
+![a](http://oai8l5dzh.bkt.clouddn.com/find_id.gif)
 ## To do:
 - [ ] 检测回答问题
 - [ ] 检测播放暂停
