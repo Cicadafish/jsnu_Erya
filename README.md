@@ -1,13 +1,5 @@
 # erya 
-![main](http://oai8l5dzh.bkt.clouddn.com/main.gif)
-
-你也可以配置[virtualdisplay](https://github.com/ponty/pyvirtualdisplay)，使他在后台运行。```未测试```
-
-## How to use
-
-### 安装依赖环境
-
-`pip install -r requirements`
+![main](./main.gif)
 
 ### install Tesseract or not
 
