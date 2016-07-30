@@ -1,0 +1,7 @@
+vv/
+*.swp
+*.pyc
+main.png
+main-cut.png
+vcode-lib/
+CAPTCHA.txt
