@@ -1,6 +1,7 @@
 #coding:utf-8
 from PIL import Image
 import colorsys
+import os
 
 # 识别图片RGB
 def get_color(im):
@@ -23,8 +24,17 @@ def get_color(im):
             max_score = score
             dominant_color = (r, g, b)
 
-    # print dominant_color
     return dominant_color
 
-# color =  get_color('./main-cut.png')
-# print color
+# 切图
+def cut_vcode(path,out_path,a,b,c,d):
+    im = Image.open(path)
+
+    im.getbbox()
+
+    region = (a,b,c,d)
+
+    cropImg = im.crop(region)
+
+    cropImg.save(out_path)
+

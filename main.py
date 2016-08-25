@@ -7,8 +7,8 @@ from pyvirtualdisplay import Display
 from easyprocess import EasyProcess
 from random_str import *
 import time
-from cut import cut_vcode
-from color import *
+
+from utils import *
 
 
 class Erya(object):
@@ -17,7 +17,7 @@ class Erya(object):
 
     def __init__(self, userID=None, pwd=None, id=None, end_id=None):
         if not userID or not pwd:
-            print 'No information'
+            print('No information')
         self.__userID = userID
         self.__pwd = pwd
         self.id = id
@@ -33,7 +33,7 @@ class Erya(object):
             span = self.wait.until(EC.visibility_of_element_located((By.ID, "nameNoteId")))
             span.click()
         except:
-            print 'EC error'
+            print('EC error')
         unameId = self.wait.until(EC.visibility_of_element_located((By.ID, "unameId")))
         unameId.clear()
         unameId.send_keys(self.__userID)
@@ -52,7 +52,7 @@ class Erya(object):
             EasyProcess('tesseract main-cut.png ./CAPTCHA').call()
             aha = True
         except:
-            print '没检测到tesseract，手动输入验证码，登录'
+            print('没检测到tesseract，手动输入验证码，登录')
             try:
                 WebDriverWait(self.driver, 5).until(lambda x: x.find_element_by_id("space_nickname"))
             except:
@@ -70,17 +70,17 @@ class Erya(object):
                 return False
         try:
             name = self.driver.find_element_by_class_name('personname')
-            print '你好，{}!'.format(name.text.encode("utf-8"))
+            print('你好，{}!'.format(name.text.encode("utf-8")))
             return True
         except:
-            print '登录失败,正在尝试重新登录。'
+            print('登录失败,正在尝试重新登录。')
             return False
     def get_cur(self):
         self.wait.until(EC.frame_to_be_available_and_switch_to_it((By.TAG_NAME, "iframe")))
         lession = self.driver.find_element_by_class_name('clearfix')
-        print '你已选择课程[{}]\n----------------------------------'.format(lession.text.encode("utf-8"))
+        print('你已选择课程[{}]\n----------------------------------'.format(lession.text.encode("utf-8")))
         duration = self.driver.find_element_by_xpath('/html/body/div/div[2]/div[2]/ul/li[1]/div[2]/p[4]')
-        print duration.text
+        print(duration.text)
         url = lession.find_elements_by_tag_name('a')[0].get_attribute('href').encode("utf-8")
         self.driver.get(url)
         a = self.driver.find_element_by_class_name('articlename')
@@ -90,13 +90,13 @@ class Erya(object):
         num = int(self.end_id.split('cur')[-1])-int(self.id.split('cur')[-1])
         for i in xrange(num+1):
             ncells = self.driver.find_element_by_id(self.id)
-            print '当前页面：{}: {}'.format(ncells.text.encode('utf-8').split(' ')[0],ncells.text.encode('utf-8').split(' ')[2])
+            print('当前页面：{}: {}'.format(ncells.text.encode('utf-8').split(' ')[0],ncells.text.encode('utf-8').split(' ')[2]))
             ncells.click()
             self.get_video()
             if self.is_finished():
-                print '已完成，跳转中'
+                print('已完成，跳转中')
             else:
-                print '正在看视频'
+                print('正在看视频')
                 self.play()
                 self.is_finished()
             self.id = 'cur{}'.format(int(self.id.split('cur')[-1])+1)
@@ -124,7 +124,7 @@ class Erya(object):
         elif RGB == (248, 179, 0):
             return False
         else:
-            print RGB
+            print(RGB)
             exit()
 
 
