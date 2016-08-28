@@ -25,8 +25,7 @@ end_id = 'cur86883558'
 - [ ] 检测播放结束，跳转
 - [ ] 识别这样的验证码
 
-    ![](./2.png)
-    ![](./4.png)
+    ![](http://ob9j09f06.bkt.clouddn.com/2016-08-28-14:09:34.jpg)
+    ![](http://ob9j09f06.bkt.clouddn.com/2016-08-28-14:36:01.jpg)
 
 > 仅供学习
-http://passport2.chaoxing.com/login?fid=1479&refer=http://i.mooc.chaoxing.com
