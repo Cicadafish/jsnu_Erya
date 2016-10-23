@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding:utf-8
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -30,15 +30,18 @@ class Erya(object):
     def login(self):
         self.driver.get(Erya.url)
         try:
-            span = self.wait.until(EC.visibility_of_element_located((By.ID, "nameNoteId")))
+            span = self.wait.until(
+                EC.visibility_of_element_located((By.ID, "nameNoteId")))
             span.click()
         except:
             print('EC error')
-        unameId = self.wait.until(EC.visibility_of_element_located((By.ID, "unameId")))
+        unameId = self.wait.until(
+            EC.visibility_of_element_located((By.ID, "unameId")))
         unameId.clear()
         unameId.send_keys(self.__userID)
 
-        passwordId = self.wait.until(EC.visibility_of_element_located((By.ID, "passwordId")))
+        passwordId = self.wait.until(
+            EC.visibility_of_element_located((By.ID, "passwordId")))
         passwordId.clear()
         passwordId.send_keys(self.__pwd)
 
@@ -47,25 +50,27 @@ class Erya(object):
         vcode_path = './main.png'
         vcode_out_path = './main-cut.png'
         self.driver.save_screenshot(vcode_path)
-        cut_vcode(vcode_path,vcode_out_path,430,343,502,374)
+        cut_vcode(vcode_path, vcode_out_path, 430, 343, 502, 374)
         try:
             EasyProcess('tesseract main-cut.png ./CAPTCHA').call()
             aha = True
         except:
             print('没检测到tesseract，手动输入验证码，登录')
             try:
-                WebDriverWait(self.driver, 5).until(lambda x: x.find_element_by_id("space_nickname"))
+                WebDriverWait(self.driver, 5).until(
+                    lambda x: x.find_element_by_id("space_nickname"))
             except:
                 return False
             aha = False
         if aha:
-            with open ('./CAPTCHA.txt') as f:
+            with open('./CAPTCHA.txt') as f:
                 CAPTCHA = f.read()
             numcode = self.driver.find_element_by_id('numcode')
             numcode.clear()
             numcode.send_keys(CAPTCHA)
             try:
-                WebDriverWait(self.driver, 5).until(lambda x: x.find_element_by_id("space_nickname"))
+                WebDriverWait(self.driver, 5).until(
+                    lambda x: x.find_element_by_id("space_nickname"))
             except:
                 return False
         try:
@@ -75,22 +80,28 @@ class Erya(object):
         except:
             print('登录失败,正在尝试重新登录。')
             return False
+
     def get_cur(self):
-        self.wait.until(EC.frame_to_be_available_and_switch_to_it((By.TAG_NAME, "iframe")))
+        self.wait.until(EC.frame_to_be_available_and_switch_to_it(
+            (By.TAG_NAME, "iframe")))
         lession = self.driver.find_element_by_class_name('clearfix')
-        print('你已选择课程[{}]\n----------------------------------'.format(lession.text.encode("utf-8")))
-        duration = self.driver.find_element_by_xpath('/html/body/div/div[2]/div[2]/ul/li[1]/div[2]/p[4]')
+        print(
+            '你已选择课程[{}]\n----------------------------------'.format(lession.text.encode("utf-8")))
+        duration = self.driver.find_element_by_xpath(
+            '/html/body/div/div[2]/div[2]/ul/li[1]/div[2]/p[4]')
         print(duration.text)
-        url = lession.find_elements_by_tag_name('a')[0].get_attribute('href').encode("utf-8")
+        url = lession.find_elements_by_tag_name(
+            'a')[0].get_attribute('href').encode("utf-8")
         self.driver.get(url)
         a = self.driver.find_element_by_class_name('articlename')
         a.click()
 
     def find_and_play(self):
-        num = int(self.end_id.split('cur')[-1])-int(self.id.split('cur')[-1])
-        for i in xrange(num+1):
+        num = int(self.end_id.split('cur')[-1]) - int(self.id.split('cur')[-1])
+        for i in xrange(num + 1):
             ncells = self.driver.find_element_by_id(self.id)
-            print('当前页面：{}: {}'.format(ncells.text.encode('utf-8').split(' ')[0],ncells.text.encode('utf-8').split(' ')[2]))
+            print('当前页面：{}: {}'.format(ncells.text.encode(
+                'utf-8').split(' ')[0], ncells.text.encode('utf-8').split(' ')[2]))
             ncells.click()
             self.get_video()
             if self.is_finished():
@@ -99,25 +110,29 @@ class Erya(object):
                 print('正在看视频')
                 self.play()
                 self.is_finished()
-            self.id = 'cur{}'.format(int(self.id.split('cur')[-1])+1)
+            self.id = 'cur{}'.format(int(self.id.split('cur')[-1]) + 1)
 
     def get_video(self):
         self.driver.implicitly_wait(1)
-        tag = self.driver.find_element_by_class_name('tabtags').find_element_by_id('dct1')
+        tag = self.driver.find_element_by_class_name(
+            'tabtags').find_element_by_id('dct1')
         if len(tag.text.encode('utf-8')) > 10:
-            tag = self.driver.find_element_by_class_name('tabtags').find_element_by_id('dct2')
+            tag = self.driver.find_element_by_class_name(
+                'tabtags').find_element_by_id('dct2')
             tag.click()
 
     def is_finished(self):
-        self.wait.until(EC.frame_to_be_available_and_switch_to_it((By.TAG_NAME, "iframe")))
-        self.wait.until(EC.visibility_of_element_located((By.TAG_NAME, "iframe")))
+        self.wait.until(EC.frame_to_be_available_and_switch_to_it(
+            (By.TAG_NAME, "iframe")))
+        self.wait.until(EC.visibility_of_element_located(
+            (By.TAG_NAME, "iframe")))
         # self.driver.implicitly_wait(10)
         time.sleep(2)
-        self.driver.switch_to_default_content();
+        self.driver.switch_to_default_content()
         vcode_path = './main.png'
         vcode_out_path = './main-cut.png'
         self.driver.save_screenshot(vcode_path)
-        cut_vcode(vcode_path,vcode_out_path,165,265,182,274)
+        cut_vcode(vcode_path, vcode_out_path, 165, 265, 182, 274)
         RGB = get_color(vcode_out_path)
         if RGB == (110, 162, 47):
             return True
@@ -127,17 +142,18 @@ class Erya(object):
             print(RGB)
             exit()
 
-
     def play(self):
         # 播放
-        self.driver.switch_to_frame(self.driver.find_element_by_tag_name("iframe"))
-        self.driver.switch_to_frame(self.driver.find_element_by_tag_name("iframe"))
+        self.driver.switch_to_frame(
+            self.driver.find_element_by_tag_name("iframe"))
+        self.driver.switch_to_frame(
+            self.driver.find_element_by_tag_name("iframe"))
         self.driver.implicitly_wait(10)
         reader = self.driver.find_element_by_id('reader')
         reader.click()
         # To do
         # 检测回答问题，播放暂停，播放结束，自动跳转
-        self.driver.implicitly_wait(60*24)
+        self.driver.implicitly_wait(60 * 24)
 
     def fill_in_discuss(self):
         pass
@@ -148,7 +164,7 @@ if __name__ == '__main__':
     begin_id = 'cur86883496'
     end_id = 'cur86883558'
 
-    erya = Erya(userID,pwd)
+    erya = Erya(userID, pwd)
     # login
     is_logined = erya.login()
     while(not is_logined):
