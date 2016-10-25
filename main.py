@@ -159,8 +159,8 @@ class Erya(object):
         pass
 
 if __name__ == '__main__':
-    userID = 15262058016
-    pwd = 924812
+    userID = 15262057000
+    pwd = ''
     begin_id = 'cur86883496'
     end_id = 'cur86883558'
 
