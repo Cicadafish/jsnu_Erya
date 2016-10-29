@@ -5,7 +5,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from pyvirtualdisplay import Display
 from easyprocess import EasyProcess
-from random_str import *
 import time
 
 from utils import *
